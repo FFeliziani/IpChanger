@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
 
 namespace IpChanger
@@ -20,6 +21,7 @@ namespace IpChanger
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private static Timer mainTimer = new Timer();
+        private string currentIp;
 
         private SysTrayApp()
         {
@@ -46,7 +48,7 @@ namespace IpChanger
             trayIcon.Text = "Processing...";
 
             // Call class to do the ip update logic
-
+            checkCurrentIP();
 
             trayIcon.Icon = new Icon(SystemIcons.WinLogo, 32, 32);
             trayIcon.Text = "Legagladio Ip Changer";
@@ -74,6 +76,19 @@ namespace IpChanger
                 trayIcon.Dispose();
             }
             base.Dispose(isDisposing);
+        }
+
+        private void checkCurrentIP()
+        {
+            try
+            {
+                currentIp = new WebClient().DownloadString("https://api.ipify.org/?format=string");
+            }
+            catch (Exception ex)
+            {
+                currentIp = null;
+            }
+            
         }
     }
 }
