@@ -1,14 +1,14 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 using OvhApi.Models.Domain.Zone;
+using OvhApi.Models.Sms;
 using OVHApi;
+using Exception = System.Exception;
 
 namespace IpChanger
 {
-
     //Environment.SetEnvironmentVariable("OVH_ENDPOINT", "ovh-eu");
     //Environment.SetEnvironmentVariable("OVH_APPLICATION_KEY", "J1MXVC7BkTJzoTi4");
     //Environment.SetEnvironmentVariable("OVH_APPLICATION_SECRET", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ");
@@ -27,36 +27,49 @@ namespace IpChanger
             Application.Run(new SysTrayApp());
         }
 
-        private NotifyIcon trayIcon;
-        private ContextMenu trayMenu;
-        private static Timer mainTimer = new Timer();
-        private string currentIp;
-        private static string machineName = Environment.MachineName;
+        private readonly NotifyIcon _trayIcon;
+        private static readonly Timer MainTimer = new Timer();
+        private string _currentIp;
+        private static readonly string MachineName = Environment.MachineName;
 
         private SysTrayApp()
         {
-            trayMenu = new ContextMenu();
+            _trayIcon = new NotifyIcon
+            {
+                Text = "Legagladio Ip Changer",
+                Icon = new Icon(SystemIcons.WinLogo, 32, 32),
+                Visible = true
+            };
+
+            UpdateContextMenu();
+
+            MainTimer.Tick += TimerEventProcessor;
+            MainTimer.Interval = 30000;
+            MainTimer.Start();
+        }
+
+        private void UpdateContextMenu()
+        {
+            var trayMenu = new ContextMenu();
+            var trayItem = new MenuItem()
+            {
+                Text = IsEmptyOrNull(_currentIp) ? "To be updated..." : _currentIp,
+                Enabled = false
+            };
+            trayMenu.MenuItems.Add(trayItem);
+            trayMenu.MenuItems.Add("-");
+            trayMenu.MenuItems.Add("Update Ip now", UpdateIp);
             trayMenu.MenuItems.Add("Exit", OnExit);
-
-            trayIcon = new NotifyIcon();
-            trayIcon.Text = "Legagladio Ip Changer";
-            trayIcon.Icon = new Icon(SystemIcons.WinLogo, 32, 32);
-
-            trayIcon.ContextMenu = trayMenu;
-            trayIcon.Visible = true;
-
-            mainTimer.Tick += new EventHandler(TimerEventProcessor);
-            mainTimer.Interval = 30000;
-            mainTimer.Start();
+            _trayIcon.ContextMenu = trayMenu;
         }
 
         private void TimerEventProcessor(object sender, EventArgs e)
         {
-            mainTimer.Stop();
+            MainTimer.Stop();
 
             UpdateIp();
 
-            mainTimer.Enabled = true;
+            MainTimer.Enabled = true;
         }
 
         private bool IsWebsiteUp()
@@ -89,50 +102,59 @@ namespace IpChanger
         {
             if (isDisposing)
             {
-                trayIcon.Dispose();
+                _trayIcon.Dispose();
             }
             base.Dispose(isDisposing);
         }
 
-        private void CheckCurrentIP()
+        private void CheckCurrentIp()
         {
             try
             {
-                currentIp = new WebClient().DownloadString("https://api.ipify.org/?format=string");
+                _currentIp = new WebClient().DownloadString("https://api.ipify.org/?format=string");
+                UpdateContextMenu();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                currentIp = null;
+                _currentIp = null;
             }
         }
 
-        private async void UpdateIp()
+        private async void UpdateIp(object sender = null, EventArgs e = null)
         {
-            trayIcon.Icon = new Icon(SystemIcons.Shield, 32, 32);
-            trayIcon.Text = "Processing...";
+            _trayIcon.Icon = new Icon(SystemIcons.Shield, 32, 32);
+            _trayIcon.Text = "Processing...";
 
             // Call class to do the ip update logic
-            CheckCurrentIP();
-            if (currentIp != null)
+            CheckCurrentIp();
+            if (_currentIp != null)
             {
                 // Check that legagladio is up
                 if (!IsWebsiteUp())
                 {
-                    OvhApiClient client = new OvhApiClient("J1MXVC7BkTJzoTi4", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ", OvhInfra.Europe, "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
+                    var client = new OvhApiClient("J1MXVC7BkTJzoTi4", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ",
+                        OvhInfra.Europe, "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
                     var record = await client.GetDomainZoneRecord("legagladio.it", 1445634879);
-                    if (machineName == "legagladio1" || record.Target != currentIp)
+                    if (MachineName == "legagladio1" || record.Target != _currentIp)
                     {
-                        var recordToUpdate = new Record();
-                        recordToUpdate.Target = currentIp;
-                        recordToUpdate.SubDomain = record.SubDomain;
-                        recordToUpdate.Ttl = 60;
+                        var recordToUpdate = new Record
+                        {
+                            Target = _currentIp,
+                            SubDomain = record.SubDomain,
+                            Ttl = 60
+                        };
                         await client.UpdateDomainZoneRecord(recordToUpdate, "legagladio.it", 1445634879);
                     }
                 }
             }
 
-            trayIcon.Icon = new Icon(SystemIcons.WinLogo, 32, 32);
-            trayIcon.Text = "Legagladio Ip Changer";
+            _trayIcon.Icon = new Icon(SystemIcons.WinLogo, 32, 32);
+            _trayIcon.Text = "Legagladio Ip Changer";
+        }
+
+        private bool IsEmptyOrNull(string val)
+        {
+            return val == null || val.Trim().Length == 0;
         }
     }
 }
