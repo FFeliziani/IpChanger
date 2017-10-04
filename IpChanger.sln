@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpChanger", "IpChanger\IpChanger.csproj", "{DA18D031-2629-4957-A5F6-4D39567023E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi", "..\ovhapicil\OVHApi\OVHApi.csproj", "{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi.Parser", "..\ovhapicil\OVHApi.Parser\OVHApi.Parser.csproj", "{18AAD39B-9710-4FB7-AA90-5CACB2317DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi.Sync", "..\ovhapicil\OVHApi.Sync\OVHApi.Sync.csproj", "{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi.testapp", "..\ovhapicil\OVHApi.testapp\OVHApi.testapp.csproj", "{5A349CAC-1B23-4236-9D38-7C2586FDE94C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{DA18D031-2629-4957-A5F6-4D39567023E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA18D031-2629-4957-A5F6-4D39567023E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA18D031-2629-4957-A5F6-4D39567023E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18AAD39B-9710-4FB7-AA90-5CACB2317DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18AAD39B-9710-4FB7-AA90-5CACB2317DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18AAD39B-9710-4FB7-AA90-5CACB2317DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18AAD39B-9710-4FB7-AA90-5CACB2317DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

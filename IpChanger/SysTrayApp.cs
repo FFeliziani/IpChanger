@@ -44,19 +44,20 @@ namespace IpChanger
             UpdateContextMenu();
 
             MainTimer.Tick += TimerEventProcessor;
-            MainTimer.Interval = 30000;
+            MainTimer.Interval = 300000;
             MainTimer.Start();
         }
 
         private void UpdateContextMenu()
         {
             var trayMenu = new ContextMenu();
-            var trayItem = new MenuItem()
+            trayMenu.MenuItems.Add(new MenuItem() {Text = MachineName, Enabled = false});
+            trayMenu.MenuItems.Add("-");
+            trayMenu.MenuItems.Add(new MenuItem()
             {
                 Text = IsEmptyOrNull(_currentIp) ? "To be updated..." : _currentIp,
                 Enabled = false
-            };
-            trayMenu.MenuItems.Add(trayItem);
+            });
             trayMenu.MenuItems.Add("-");
             trayMenu.MenuItems.Add("Update Ip now", UpdateIp);
             trayMenu.MenuItems.Add("Exit", OnExit);
@@ -82,7 +83,7 @@ namespace IpChanger
             {
                 return false;
             }
-            return false;
+            return true;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -132,19 +133,31 @@ namespace IpChanger
                 // Check that legagladio is up
                 if (!IsWebsiteUp())
                 {
-                    var client = new OvhApiClient("J1MXVC7BkTJzoTi4", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ",
-                        OvhInfra.Europe, "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
+                    var client = new OvhApiClient("J1MXVC7BkTJzoTi4", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ", OvhInfra.Europe, "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
                     var record = await client.GetDomainZoneRecord("legagladio.it", 1445634879);
-                    if (MachineName == "legagladio1" || record.Target != _currentIp)
+                    var legagladio1Record = await client.GetDomainZoneRecord("legagladio.it", 1475221378);
+                    var legagladio2Record = await client.GetDomainZoneRecord("legagladio.it", 1480973240);
+                    if (MachineName.ToLower() == "legagladio1")
                     {
-                        var recordToUpdate = new Record
+                        if (record.Target != _currentIp)
                         {
-                            Target = _currentIp,
-                            SubDomain = record.SubDomain,
-                            Ttl = 60
-                        };
-                        await client.UpdateDomainZoneRecord(recordToUpdate, "legagladio.it", 1445634879);
+                            record.Target = _currentIp;
+                            await client.UpdateDomainZoneRecord(record, "legagladio.it", 1445634879);
+                        }
+                        legagladio1Record.Target = _currentIp;
+                        await client.UpdateDomainZoneRecord(legagladio1Record, "legagladio.it", 1475221378);
                     }
+                    if (MachineName.ToLower() == "legagladio2")
+                    {
+                        if (legagladio1Record.Target != record.Target && record.Target != _currentIp)
+                        {
+                            record.Target = _currentIp;
+                            await client.UpdateDomainZoneRecord(record, "legagladio.it", 1445634879);
+                        }
+                        legagladio2Record.Target = _currentIp;
+                        await client.UpdateDomainZoneRecord(legagladio2Record, "legagladio.it", 1480973240);
+                    }
+                    await client.CreateDomainZoneRefresh("legagladio.it");
                 }
             }
 
