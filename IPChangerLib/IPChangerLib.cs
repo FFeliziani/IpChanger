@@ -45,8 +45,8 @@ namespace IPChangerLib
                 // Check that legagladio is up
                 if (!IsWebsiteUp())
                 {
-                    var client = new OvhApiClient("J1MXVC7BkTJzoTi4", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ",
-                        OvhInfra.Europe, "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
+                    var client = new OvhApiClient("CLIENT ID", "APP SECRET",
+                        OvhInfra.Europe, "CONF CODE");
                     var WebClient = new WebClient();
                     var mainServerName =
                         WebClient.DownloadString("http://lnx.federicofeliziani.com/legagladio/currentMain");
