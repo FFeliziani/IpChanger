@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpChanger", "IpChanger\IpChanger.csproj", "{DA18D031-2629-4957-A5F6-4D39567023E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPChangerTray", "IpChanger\IPChangerTray.csproj", "{DA18D031-2629-4957-A5F6-4D39567023E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi", "..\ovhapicil\OVHApi\OVHApi.csproj", "{238E8EA0-5ABE-433B-B328-6C05C9B9FD4D}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi.Sync", "..\ovhapicil\OVHApi.Sync\OVHApi.Sync.csproj", "{E38897F2-0EFD-4E78-84E8-C3EA34AE4EF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OVHApi.testapp", "..\ovhapicil\OVHApi.testapp\OVHApi.testapp.csproj", "{5A349CAC-1B23-4236-9D38-7C2586FDE94C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPChangerService", "IPChangerService\IPChangerService.csproj", "{F00DD08E-0FD1-40A0-BC93-6F8EDFAFDB1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPChangerLib", "IPChangerLib\IPChangerLib.csproj", "{FA0F37E9-125E-4387-B317-519EE6D4FC8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A349CAC-1B23-4236-9D38-7C2586FDE94C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00DD08E-0FD1-40A0-BC93-6F8EDFAFDB1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00DD08E-0FD1-40A0-BC93-6F8EDFAFDB1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00DD08E-0FD1-40A0-BC93-6F8EDFAFDB1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00DD08E-0FD1-40A0-BC93-6F8EDFAFDB1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0F37E9-125E-4387-B317-519EE6D4FC8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0F37E9-125E-4387-B317-519EE6D4FC8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0F37E9-125E-4387-B317-519EE6D4FC8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0F37E9-125E-4387-B317-519EE6D4FC8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
