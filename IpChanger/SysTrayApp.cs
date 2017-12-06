@@ -11,11 +11,6 @@ using IpChangerLib = IPChangerLib.IPChangerLib;
 
 namespace IPChangerTray
 {
-    //Environment.SetEnvironmentVariable("OVH_ENDPOINT", "ovh-eu");
-    //Environment.SetEnvironmentVariable("OVH_APPLICATION_KEY", "J1MXVC7BkTJzoTi4");
-    //Environment.SetEnvironmentVariable("OVH_APPLICATION_SECRET", "q3DUZlTvv0Eag01dML1LLo7KapYAj7rQ");
-    //Environment.SetEnvironmentVariable("OVH_CONSUMER_KEY", "s1SL3ItS4noJTfWKo8gmRpb9wwVAi6VR");
-
     public class SysTrayApp : Form
     {
         /// <summary>
